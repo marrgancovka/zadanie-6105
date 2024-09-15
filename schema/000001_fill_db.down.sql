@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS bid;
+DROP TABLE IF EXISTS tender;
+DROP TYPE IF EXISTS status_type;
+DROP TYPE IF EXISTS type_author;
+DROP TYPE IF EXISTS type_decision;
+DROP TYPE IF EXISTS type_service;
