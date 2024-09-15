@@ -1,0 +1,42 @@
+
+services:
+  db:
+    container_name: postgresql
+    image: postgres:latest
+    restart: always
+    volumes:
+      - type: volume
+        source: postgresdb-data
+        target: /var/lib/postgresql/data
+    env_file:
+      - ./.env
+    ports:
+      - ${POSTGRES_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    networks:
+      - tenders_network
+
+  main:
+    depends_on:
+      - db
+    container_name: mainService
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    env_file:
+      - ./.env
+    networks:
+      - tenders_network
+
+volumes:
+  postgresdb-data:
+    driver: local
+
+networks:
+  tenders_network:
+    driver: bridge
